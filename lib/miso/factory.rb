@@ -45,10 +45,8 @@ module Miso
     end
     
     def apply(input_file, output_file)
-      image = Image.new(input_file)
-      @operations.each do |method, args|
-        image.send(method, *args)
-      end
+      image = Image.new(input_file, @processor_class)
+      @operations.each { |method, args| image.send(method, *args) }
       image.write(output_file)
     end
   end
