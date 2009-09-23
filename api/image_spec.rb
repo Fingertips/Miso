@@ -23,7 +23,7 @@ describe "Miso::Image, concerning initialization" do
   end
 end
 
-describe "An instance of Miso::Image" do
+describe "An instance of Miso::Image, concerning forwarding calls to the processor" do
   before do
     image = Miso::Image.new('/image.png')
   end
@@ -33,7 +33,7 @@ describe "An instance of Miso::Image" do
     image.crop(123, 456)
   end
   
-  it "should return the Miso::Image instance when calling #crop" do
+  it "should return self when calling #crop" do
     image.crop(123, 456).should.be image
   end
   
@@ -42,7 +42,7 @@ describe "An instance of Miso::Image" do
     image.fit(123, 456)
   end
   
-  it "should return the Miso::Image instance when calling #fit" do
+  it "should return self instance when calling #fit" do
     image.fit(123, 456).should.be image
   end
   
@@ -55,6 +55,25 @@ describe "An instance of Miso::Image" do
     image.processor.expects(:write).with('/output_image.png')
     output_image = image.write('/output_image.png')
     output_image.input_file.should == '/output_image.png'
+  end
+end
+
+describe "An instance of Miso::Image, concerning combined methods" do
+  before do
+    image = Miso::Image.new('/image.png')
+  end
+  
+  it "should call #fit to scale and preserve aspect ratio, then call #crop" do
+    image.expects(:fit).with do |width, height|
+      image.expects(:crop).with(123, 456)
+      width == 123 and height == 456
+    end
+    
+    image.crop_fitting(123, 456)
+  end
+  
+  it "should return self when calling #crop_fitting" do
+    image.crop_fitting(123, 456).should.be image
   end
 end
 

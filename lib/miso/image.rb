@@ -6,6 +6,8 @@ module Miso
       @processor = processor_class.new(input_file)
     end
     
+    # Basic methods
+    
     def crop(width, height)
       @processor.crop(width, height)
       self
@@ -24,6 +26,14 @@ module Miso
       @processor.write(output_file)
       self.class.new(output_file, @processor.class)
     end
+    
+    # Combined methods
+    
+    def crop_fitting(width, heigth)
+      fit(width, heigth).crop(width, heigth)
+    end
+    
+    # Class shortcut methods
     
     def self.crop(input_file, output_file, width, heigth, processor_class = Processor.processor_class)
       new(input_file, processor_class).crop(width.height).write(output_file)
