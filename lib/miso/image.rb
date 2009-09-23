@@ -1,40 +1,40 @@
 module Miso
   class Image
-    def initialize(input_file)
-      @input_file = input_file
-      @operations = []
+    attr_reader :input_file, :processor
+    
+    def initialize(input_file, processor_class = Processor.processor_class)
+      @processor = processor_class.new(input_file)
     end
     
     def crop(width, height)
-      dimensions = "#{width}x#{height}"
-      @operations << "-resize #{dimensions}^ -gravity center -crop #{dimensions}+0+0"
+      @processor.crop(width, height)
+      self
     end
     
     def fit(width, height)
-      @operations << "-resize #{width}x#{height}^"
+      @processor.fit(width, height)
+      self
     end
     
     def dimensions
-      if info = identify(input_file) and match = /\s(\d+)x(\d+)\+/.match(info)
-        match.to_a[1..2]
-      end
+      @processor.dimensions
     end
     
     def write(output_file)
-      convert(input_file, output_file, @operations.join(' '))
-      self.class.new(output_file)
+      @processor.write(output_file)
+      self.class.new(output_file, @processor.class)
     end
     
-    def self.crop(input_file, output_file, width, heigth)
-      new(input_file).crop(width.height).write(output_file)
+    def self.crop(input_file, output_file, width, heigth, processor_class = Processor.processor_class)
+      new(input_file, processor_class).crop(width.height).write(output_file)
     end
     
-    def self.fit(input_file, output_file, width, height)
-      new(input_file).fit(width.height).write(output_file)
+    def self.fit(input_file, output_file, width, height, processor_class = Processor.processor_class)
+      new(input_file, processor_class).fit(width.height).write(output_file)
     end
     
-    def self.dimensions(input_file)
-      new(input_file).dimensions
+    def self.dimensions(input_file, processor_class = Processor.processor_class)
+      new(input_file, processor_class).dimensions
     end
   end
 end

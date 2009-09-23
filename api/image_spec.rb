@@ -1,38 +1,88 @@
-describe "An instance of Miso::Image" do
+describe "Miso::Image, concerning initialization" do
   before do
-    image_120_x_100 = Miso::Image.new(fixture_file('120x100.png'))
-    output_file = temp_file('temp.png')
+    Miso::Processor.processor_class = nil
   end
   
-  it "should crop to specified dimensions" do
-    image_120_x_100.crop(40, 30).write(output_file).dimensions.should == [40, 30]
-    image_120_x_100.crop(40, 34).write(output_file).dimensions.should == [40, 34]
+  after do
+    Miso::Processor.processor_class = nil
   end
   
-  it "should fit to specified dimensions, conserving the original aspect ratio" do
-    image_120_x_100.fit(40, 30).write(output_file).dimensions.should == [36, 30]
-    image_120_x_100.fit(40, 34).write(output_file).dimensions.should == [40, 33]
+  it "should initialize with only a file argument and use the default processor class" do
+    Miso::Processor.processor_class = Miso::Processor::ImageMagick
+    image = Miso::Image.new('/image.png')
+    
+    image.input_file.should == '/image.png'
+    image.processor.class.should == Miso::Processor::ImageMagick
   end
   
-  it "should return its dimensions" do
-    image_120_x_100.dimensions.should == [120, 100]
+  it "should initialize with a file and processor class" do
+    image = Miso::Image.new('/image.png', Miso::Processor::ImageMagick)
+    
+    image.input_file.should == '/image.png'
+    image.processor.class.should == Miso::Processor::ImageMagick
   end
 end
 
-describe "Miso::Image"
+describe "An instance of Miso::Image" do
+  before do
+    image = Miso::Image.new('/image.png')
+  end
+  
+  it "should forward #crop to the processor" do
+    image.processor.expects(:crop).with(123, 456)
+    image.crop(123, 456)
+  end
+  
+  it "should return the Miso::Image instance when calling #crop" do
+    image.crop(123, 456).should.be image
+  end
+  
+  it "should forward #fit to the processor" do
+    image.processor.expects(:fit).with(123, 456)
+    image.fit(123, 456)
+  end
+  
+  it "should return the Miso::Image instance when calling #fit" do
+    image.fit(123, 456).should.be image
+  end
+  
+  it "should forward #dimensions to the processor and return the result" do
+    image.processor.expects(:dimensions).returns([123, 456])
+    image.dimensions.should == [123, 456]
+  end
+  
+  it "should forward #write to the processor and return the output file as a new instance of Miso::Image" do
+    image.processor.expects(:write).with('/output_image.png')
+    output_image = image.write('/output_image.png')
+    output_image.input_file.should == '/output_image.png'
+  end
+end
+
+describe "Miso::Image, concerning shortcut class methods" do
+  before do
+    @input_file = fixture_file('120x100.png')
+    @output_file = temp_file('cropped_to_40x30.png')
+    @image = Miso::Image.new(@input_file)
+    
+    Miso::Image.expects(:new).with(@input_file).returns(@image)
+  end
+  
   it "should crop to specified dimensions" do
-    output_file = temp_file('cropped_to_40x30.png')
-    Miso::Image.crop(fixture_file('120x100.png'), output_file, 40, 30)
-    Miso::Image.dimensions(output_file).should == [40, 30]
+    @image.expects(:crop).with(40, 30)
+    @image.expects(:write).with(@output_file)
+    
+    Miso::Image.crop(@input_file), @output_file, 40, 30)
   end
-
+  
   it "should fit to specified dimensions, conserving the original aspect ratio" do
-    output_file = temp_file('fits_within_40x30.png')
-    Miso::Image.fit(fixture_file('120x100.png'), output_file, 40, 30)
-    Miso::Image.dimensions(output_file).should == [36, 30]
+    @image.expects(:fit).with(40, 30)
+    @image.expects(:write).with(@output_file)
+    
+    Miso::Image.fit(@input_file), @output_file, 40, 30)
   end
-
+  
   it "should return its dimensions" do
-    Miso::Image.dimensions(fixture_file('120x100.png'), 120, 100)
+    @image.expects(:dimensions).returns([120, 100])
+    Miso::Image.dimensions(@input_file).should == [120, 100]
   end
 end
