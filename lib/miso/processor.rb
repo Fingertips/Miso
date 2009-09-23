@@ -1,5 +1,6 @@
 module Miso
   class Processor
+    autoload :CoreImage,   'miso/processor/core_image'
     autoload :ImageMagick, 'miso/processor/image_magick'
     
     class NotImplementedError < StandardError; end
@@ -27,7 +28,7 @@ module Miso
       # When no explicit processor_class is set this list is iterated, from
       # first to last, and the first available processor on the machine is used.
       def processor_classes
-        @processor_classes ||= [ImageMagick]
+        @processor_classes ||= [CoreImage, ImageMagick]
       end
       
       def available?
