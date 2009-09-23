@@ -1,5 +1,7 @@
 module Miso
   class Processor
+    autoload :ImageMagick, 'miso/processor/image_magick'
+    
     class NotImplementedError < StandardError; end
     
     class << self
