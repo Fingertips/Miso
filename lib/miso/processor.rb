@@ -58,5 +58,13 @@ module Miso
     def write(output_file)
       raise NotImplementedError, "The class `#{self.class.name}' does not implement #write."
     end
+    
+    def width
+      dimensions.first
+    end
+    
+    def height
+      dimensions.last
+    end
   end
 end

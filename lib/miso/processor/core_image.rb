@@ -16,14 +16,6 @@ module Miso
         @dimensions ||= image.extent.size.to_a
       end
       
-      def width
-        dimensions.first
-      end
-      
-      def height
-        dimensions.last
-      end
-      
       def crop(width, height)
         scale_width, scale_height = scale(width, height)
         multiplier = scale_width > scale_height ? scale_width : scale_height

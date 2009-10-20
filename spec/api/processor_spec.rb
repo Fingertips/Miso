@@ -50,4 +50,11 @@ describe "Miso::Processor" do
     end
     raised.should.be true
   end
+  
+  it "should returns the width and height" do
+    processor = Miso::Processor.new(fixture_file('120x100.png'))
+    processor.stubs(:dimensions).returns([120, 100])
+    processor.width.should == 120
+    processor.height.should == 100
+  end
 end

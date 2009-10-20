@@ -58,6 +58,16 @@ describe "An instance of Miso::Image, concerning forwarding calls to the process
     @image.dimensions.should == [123, 456]
   end
   
+  it "should forward #width and #height to the processor and return the result" do
+    @image.processor.expects(:width).returns(123)
+    @image.width.should == 123
+  end
+  
+  it "should forward #height to the processor and return the result" do
+    @image.processor.expects(:height).returns(456)
+    @image.height.should == 456
+  end
+  
   it "should forward #write to the processor and forward its output file to the new instance of Miso::Image" do
     @image.processor.expects(:write).with(fixture_file('120x100.png'))
     output_image = @image.write(fixture_file('120x100.png'))

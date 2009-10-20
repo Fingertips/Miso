@@ -23,6 +23,14 @@ module Miso
       @processor.dimensions
     end
     
+    def width
+      @processor.width
+    end
+    
+    def height
+      @processor.height
+    end
+    
     def write(output_file)
       @processor.write(output_file)
       self.class.new(output_file, @processor.class)
