@@ -26,12 +26,13 @@ module Miso
       
       def crop(width, height)
         scale_width, scale_height = scale(width, height)
-        landscape  = scale_width > scale_height
-        multiplier = landscape ? scale_width : scale_height
-        diameter   = landscape ? width : height
-        
+        multiplier = scale_width > scale_height ? scale_width : scale_height
         transform(multiplier)
-        _crop(diameter, diameter, true)
+        
+        # find the center and calculate the new bottom right from there
+        x = ((buffer_width.to_f - width.to_f) / 2).round.abs
+        y = ((buffer_height.to_f - height.to_f) / 2).round.abs
+        _crop(x, y, width, height)
       end
       
       def fit(width, height)
@@ -41,7 +42,7 @@ module Miso
         new_height = (self.height * multiplier).round
         
         transform(multiplier)
-        _crop(new_width, new_height, false)
+        _crop(0, 0, new_width, new_height)
       end
       
       def write(output_file)
@@ -88,14 +89,7 @@ module Miso
                      'inputAspectRatio' => 1.0
       end
       
-      def _crop(width, height, center)
-        if center
-          # find the center and calculate the new bottom right from there
-          x = ((buffer_width.to_f / 2) - (width.to_f / 2)).round
-          y = ((buffer_height.to_f / 2) - (height.to_f / 2)).round
-        else
-          x = y = 0
-        end
+      def _crop(x, y, width, height)
         apply_filter 'CICrop', 'inputRectangle' => OSX::CIVector.vectorWithX_Y_Z_W(x, y, width, height)
       end
       
