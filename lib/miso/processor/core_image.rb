@@ -13,7 +13,7 @@ module Miso
       end
       
       def dimensions
-        @dimensions ||= ci_image.extent.size.to_a
+        @dimensions ||= image.extent.size.to_a
       end
       
       def width
@@ -25,27 +25,23 @@ module Miso
       end
       
       def crop(width, height)
-        apply_filter 'CICrop',
-                     'inputRectangle' => vector(width, height)
+        scale_width, scale_height = scale(width, height)
+        landscape  = scale_width > scale_height
+        multiplier = landscape ? scale_width : scale_height
+        diameter   = landscape ? width : height
+        
+        transform(multiplier)
+        _crop(diameter, diameter, true)
       end
       
       def fit(width, height)
-        # choose a scaling factor
-        width_multiplier = width.to_f / self.width
-        height_multiplier = height.to_f / self.height
-        multiplier = width_multiplier < height_multiplier ? width_multiplier : height_multiplier
+        scale_width, scale_height = scale(width, height)
+        multiplier = scale_width < scale_height ? scale_width : scale_height
+        new_width  = (self.width * multiplier).round
+        new_height = (self.height * multiplier).round
         
-        # crop result to integer pixel dimensions
-        new_width = (self.width * multiplier).truncate
-        new_height = (self.height * multiplier).truncate
-        
-        apply_filter 'CIAffineClamp',
-                     'inputTransform' => OSX::NSAffineTransform.transform
-        apply_filter 'CILanczosScaleTransform',
-                     'inputScale' => multiplier.to_f,
-                     'inputAspectRatio' => 1.0
-        
-        crop(new_width, new_height)
+        transform(multiplier)
+        _crop(new_width, new_height, false)
       end
       
       def write(output_file)
@@ -57,16 +53,20 @@ module Miso
       
       private
       
-      def reset!
-        @buffer = ci_image
-      end
-      
-      def ci_image
+      def image
         OSX::CIImage.imageWithContentsOfURL(OSX::NSURL.fileURLWithPath(@input_file))
       end
       
-      def vector(width, height)
-        OSX::CIVector.vectorWithX_Y_Z_W(0, 0, width, height)
+      def reset!
+        @buffer = image
+      end
+      
+      def buffer_width
+        @buffer.extent.size.width
+      end
+      
+      def buffer_height
+        @buffer.extent.size.height
       end
       
       def apply_filter(name, options)
@@ -76,6 +76,27 @@ module Miso
           filter.setValue_forKey(value, name)
         end
         @buffer = filter.valueForKey('outputImage')
+      end
+      
+      def scale(width, height)
+        [width.to_f / buffer_width, height.to_f / buffer_height]
+      end
+      
+      def transform(multiplier)
+        apply_filter 'CILanczosScaleTransform',
+                     'inputScale' => multiplier,
+                     'inputAspectRatio' => 1.0
+      end
+      
+      def _crop(width, height, center)
+        if center
+          # find the center and calculate the new bottom right from there
+          x = ((buffer_width.to_f / 2) - (width.to_f / 2)).round
+          y = ((buffer_height.to_f / 2) - (height.to_f / 2)).round
+        else
+          x = y = 0
+        end
+        apply_filter 'CICrop', 'inputRectangle' => OSX::CIVector.vectorWithX_Y_Z_W(x, y, width, height)
       end
       
       def detect_file_type(path)
