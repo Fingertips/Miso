@@ -37,8 +37,8 @@ begin
   Jeweler::Tasks.new do |s|
     s.name     = "miso"
     s.homepage = "http://github.com/Fingertips/miso"
-    s.email    = "manfred@fngtps.com"
-    s.authors  = ["Manfred Stienstra"]
+    s.email    = ["eloy@fngtps.com", "manfred@fngtps.com"]
+    s.authors  = ["Eloy Duran", "Manfred Stienstra"]
     s.summary  = s.description = "Miso is a unified API for simple image operations commonly used on the web."
     s.files    = FileList['**/**'] # tmp until we've patched Jeweler to be able to easily add files to defaults
   end
