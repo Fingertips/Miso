@@ -1,2 +1,3 @@
+- Make file type discovery in the CoreImage processor work.
 - Add Miso::Image#add(image, 10, 10), which adds another image on top of the image. This should be implemented by the processor as well.
 - Add Miso::Image#watermark(image, :southwest, 10, 10), which uses Miso::Image#add to add an image in one of the corners.
