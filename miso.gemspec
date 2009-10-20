@@ -5,13 +5,13 @@
 
 Gem::Specification.new do |s|
   s.name = %q{miso}
-  s.version = "0.1.0"
+  s.version = "0.1.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["Manfred Stienstra"]
+  s.authors = ["Eloy Duran", "Manfred Stienstra"]
   s.date = %q{2009-10-20}
   s.description = %q{Miso is a unified API for simple image operations commonly used on the web.}
-  s.email = %q{manfred@fngtps.com}
+  s.email = ["eloy@fngtps.com", "manfred@fngtps.com"]
   s.extra_rdoc_files = [
     "LICENSE",
      "README"
@@ -49,6 +49,8 @@ Gem::Specification.new do |s|
      "lib/miso/processor.rb",
      "lib/miso/processor/core_image.rb",
      "lib/miso/processor/image_magick.rb",
+     "miso.gemspec",
+     "pkg/miso-0.1.0.gem",
      "spec/api/factory_spec.rb",
      "spec/api/image_spec.rb",
      "spec/api/processor/image_magick_spec.rb",
@@ -74,8 +76,11 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
+      s.add_runtime_dependency(%q<executioner>, [">= 0.2.0"])
     else
+      s.add_dependency(%q<executioner>, [">= 0.2.0"])
     end
   else
+    s.add_dependency(%q<executioner>, [">= 0.2.0"])
   end
 end
