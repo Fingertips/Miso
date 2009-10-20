@@ -18,8 +18,8 @@ module Miso
       # processor, that is available on the machine, from the processor_classes
       # array.
       def processor_class
-        @processor_class = processor_classes.find { |c| c.available? } if @processor_class.nil?
-        raise "None of the Miso::Processor classes is available." unless @process_class
+        @processor_class ||= processor_classes.find { |c| c.available? }
+        raise "None of the Miso::Processor classes is available." unless @processor_class
         @processor_class
       end
       

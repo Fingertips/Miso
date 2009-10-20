@@ -1,0 +1,15 @@
+require 'ignore'
+
+ignore(/(^spec\/tmp|\.DS_Store)$/)
+
+process do |files|
+  test_files = files.take_and_map do |file|
+    case file
+    when %r{^spec}
+      file
+    when %r{^lib/miso/([\w\/]+).rb$}
+      "spec/api/#{$1}_spec.rb"
+    end
+  end
+  run_ruby_tests test_files
+end

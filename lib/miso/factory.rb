@@ -5,7 +5,7 @@ module Miso
     end
   end
   
-  # A Miso::Image::Factory can be used to define multiple operations that are
+  # A Miso::Image::Factory can be used to define multiple operations which are
   # to be applied to an image.
   #
   # A typical use case would be:

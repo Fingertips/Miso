@@ -6,14 +6,14 @@ task :default => :spec
 namespace :spec do
   desc "Run all API specs"
   task :api do
-    Dir[File.dirname(__FILE__) + '/api/**/*_spec.rb'].each do |file|
+    Dir[File.dirname(__FILE__) + '/spec/api/**/*_spec.rb'].each do |file|
       load file
     end
   end
   
   desc "Run all functional specs"
   task :functional do
-    Dir[File.dirname(__FILE__) + '/spec/**/*_spec.rb'].each do |file|
+    Dir[File.dirname(__FILE__) + '/spec/functional/*_spec.rb'].each do |file|
       load file
     end
   end

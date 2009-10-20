@@ -1,21 +1,22 @@
 module Miso
   class Image
-    attr_reader :input_file, :processor
+    attr_reader :processor
     
-    def initialize(input_file, processor_class = Processor.processor_class)
-      @processor = processor_class.new(input_file)
+    def initialize(input_file, processor_class=nil)
+      processor_class ||= Processor.processor_class
+      @processor  = processor_class.new(input_file)
     end
     
     # Basic methods
     
     def crop(width, height)
       @processor.crop(width, height)
-      self
+      return self
     end
     
     def fit(width, height)
       @processor.fit(width, height)
-      self
+      return self
     end
     
     def dimensions
@@ -35,15 +36,15 @@ module Miso
     
     # Class shortcut methods
     
-    def self.crop(input_file, output_file, width, heigth, processor_class = Processor.processor_class)
-      new(input_file, processor_class).crop(width.height).write(output_file)
+    def self.crop(input_file, output_file, width, height, processor_class = nil)
+      new(input_file, processor_class).crop(width, height).write(output_file)
     end
     
-    def self.fit(input_file, output_file, width, height, processor_class = Processor.processor_class)
-      new(input_file, processor_class).fit(width.height).write(output_file)
+    def self.fit(input_file, output_file, width, height, processor_class = nil)
+      new(input_file, processor_class).fit(width, height).write(output_file)
     end
     
-    def self.dimensions(input_file, processor_class = Processor.processor_class)
+    def self.dimensions(input_file, processor_class = nil)
       new(input_file, processor_class).dimensions
     end
   end

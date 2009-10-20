@@ -8,7 +8,7 @@ describe "An instance of Miso::Processor::ImageMagick" do
   
   it "should crop to specified dimensions" do
     @image_120_x_100.crop(40, 30).write(@output_file).dimensions.should == [40, 30]
-    @image_120_x_100.crop(40, 34).write(@output_file).dimensions.should == [40, 34]
+    @image_120_x_100.crop(40, 33).write(@output_file).dimensions.should == [40, 33]
   end
   
   it "should fit to specified dimensions, conserving the original aspect ratio" do

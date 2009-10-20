@@ -1,6 +1,8 @@
 require File.expand_path('../../start', __FILE__)
 
 describe "Miso::Image, concerning initialization" do
+  class FakeProcessor; end
+  
   before do
     Miso::Processor.processor_class = nil
   end
@@ -13,69 +15,73 @@ describe "Miso::Image, concerning initialization" do
     Miso::Processor.processor_class = Miso::Processor::ImageMagick
     image = Miso::Image.new('/image.png')
     
-    image.input_file.should == '/image.png'
+    image.processor.input_file.should == '/image.png'
     image.processor.class.should == Miso::Processor::ImageMagick
   end
   
   it "should initialize with a file and processor class" do
     image = Miso::Image.new('/image.png', Miso::Processor::ImageMagick)
     
-    image.input_file.should == '/image.png'
+    image.processor.input_file.should == '/image.png'
     image.processor.class.should == Miso::Processor::ImageMagick
   end
 end
 
 describe "An instance of Miso::Image, concerning forwarding calls to the processor" do
   before do
-    image = Miso::Image.new('/image.png')
+    Miso::Processor.any_instance.stubs(:fit)
+    Miso::Processor.any_instance.stubs(:crop)
+    
+    @image = Miso::Image.new('/image.png', Miso::Processor)
   end
   
   it "should forward #crop to the processor" do
-    image.processor.expects(:crop).with(123, 456)
-    image.crop(123, 456)
+    @image.processor.expects(:crop).with(123, 456)
+    @image.crop(123, 456)
   end
   
   it "should return self when calling #crop" do
-    image.crop(123, 456).should.be image
+    @image.crop(123, 456).should.be @image
   end
   
   it "should forward #fit to the processor" do
-    image.processor.expects(:fit).with(123, 456)
-    image.fit(123, 456)
+    @image.processor.expects(:fit).with(123, 456)
+    @image.fit(123, 456)
   end
   
   it "should return self instance when calling #fit" do
-    image.fit(123, 456).should.be image
+    @image.fit(123, 456).should.be @image
   end
   
   it "should forward #dimensions to the processor and return the result" do
-    image.processor.expects(:dimensions).returns([123, 456])
-    image.dimensions.should == [123, 456]
+    @image.processor.expects(:dimensions).returns([123, 456])
+    @image.dimensions.should == [123, 456]
   end
   
-  it "should forward #write to the processor and return the output file as a new instance of Miso::Image" do
-    image.processor.expects(:write).with('/output_image.png')
-    output_image = image.write('/output_image.png')
-    output_image.input_file.should == '/output_image.png'
+  it "should forward #write to the processor and forward its output file to the new instance of Miso::Image" do
+    @image.processor.expects(:write).with('/output_image.png')
+    output_image = @image.write('/output_image.png')
+    output_image.processor.input_file.should == '/output_image.png'
   end
 end
 
 describe "An instance of Miso::Image, concerning combined methods" do
   before do
-    image = Miso::Image.new('/image.png')
+    Miso::Processor.any_instance.stubs(:fit)
+    Miso::Processor.any_instance.stubs(:crop)
+    
+    @image = Miso::Image.new('/image.png', Miso::Processor)
   end
   
   it "should call #fit to scale and preserve aspect ratio, then call #crop" do
-    image.expects(:fit).with do |width, height|
-      image.expects(:crop).with(123, 456)
-      width == 123 and height == 456
-    end
+    @image.expects(:fit).with(123, 456).returns(@image)
+    @image.expects(:crop).with(123, 456).returns(@image)
     
-    image.crop_fitting(123, 456)
+    @image.crop_fitting(123, 456)
   end
   
   it "should return self when calling #crop_fitting" do
-    image.crop_fitting(123, 456).should.be image
+    @image.crop_fitting(123, 456).should.be @image
   end
 end
 
@@ -83,20 +89,20 @@ describe "Miso::Image, concerning shortcut class methods" do
   before do
     @input_file = fixture_file('120x100.png')
     @output_file = temp_file('cropped_to_40x30.png')
-    @image = Miso::Image.new(@input_file)
+    @image = Miso::Image.new(@input_file, Miso::Processor)
     
-    Miso::Image.expects(:new).with(@input_file).returns(@image)
+    Miso::Image.stubs(:new).with(@input_file, nil).returns(@image)
   end
   
   it "should crop to specified dimensions" do
-    @image.expects(:crop).with(40, 30)
+    @image.expects(:crop).with(40, 30).returns(@image)
     @image.expects(:write).with(@output_file)
     
     Miso::Image.crop(@input_file, @output_file, 40, 30)
   end
   
   it "should fit to specified dimensions, conserving the original aspect ratio" do
-    @image.expects(:fit).with(40, 30)
+    @image.expects(:fit).with(40, 30).returns(@image)
     @image.expects(:write).with(@output_file)
     
     Miso::Image.fit(@input_file, @output_file, 40, 30)
