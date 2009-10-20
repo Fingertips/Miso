@@ -12,6 +12,9 @@ distributed image processing backend.
 
 [1] Note how this means you will never have to install ImageMagick again (;
 
+: INSTALL
+
+  $ gem install miso --source http://gemcutter.org
 
 : EXAMPLES
 
