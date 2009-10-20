@@ -1,0 +1,50 @@
+(...) Miso
+
+Miso is a unified API for simple image operations commonly used on the web. It
+provides backends for often used graphic libraries, but it's also pretty easy
+to plug in your own backend.
+
+A unified API is helpful when you run your code on a number of different boxes
+and architectures. For instance, you could develop your web application on your
+Mac with the Core Image backend [1] and deploy to your Linux server with an
+ImageMagick backend. You could even have the API talk to your custom
+distributed image processing backend.
+
+[1] Note how this means you will never have to install ImageMagick again (;
+
+
+: EXAMPLES
+
+Miso can be used in three different ways, each useful in different situations.
+
+  1. For the quick crop
+  
+    Miso::Image.crop('input.jpg', 'output.jpg', 120, 100)
+  
+  2. For the elaborate business logic
+  
+    @image = Miso::Image.new('input.jpg')
+    @image.crop(120, 100) if options[:crop]
+    @image.fit(120, 100) if options[:fit]
+    @image.write('output.jpg')
+  
+  3. As an option
+  
+    class Attachment
+      has_variant :avatar,
+        :processor => Miso::Image.factory.crop(120, 100).fit(60, 40)
+    end
+    
+  Which works like this;
+    
+    factory = Miso::Image.factory.crop(123, 456)
+    factory.apply('input.jpg', 'output.jpg')
+
+But wait, there is more! Read the API documentation for more goodies.
+
+
+: SUPPORTED BACKENDS
+
+Currently supported backends are: Core Image and ImageMagick, because those
+are the ones we use. If you want to contribute backends we're happy to
+accept patches!
