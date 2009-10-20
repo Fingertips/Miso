@@ -27,4 +27,12 @@ class Test::Unit::TestCase
   def temp_file(filename)
     File.join(TMP_DIR, filename)
   end
+  
+  def with_load_path(*load_path)
+    before = $:.dup
+    $:.replace load_path
+    yield
+  ensure
+    $:.replace before
+  end
 end
