@@ -6,7 +6,7 @@ describe "A Miso::Factory instance" do
     
     Miso::Processor.any_instance.stubs(:write)
     
-    @input_file  = '/image.png'
+    @input_file  = fixture_file('120x100.png')
     @output_file = '/output_image.png'
     @image       = Miso::Image.new(@input_file)
     

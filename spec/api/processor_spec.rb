@@ -35,7 +35,19 @@ describe "Miso::Processor" do
     }.should.raise
   end
   
-  it "should initialize with an input file" do
-    Miso::Processor.new('/image.png').input_file.should == '/image.png'
+  it "should initialize with an input file path" do
+    processor = Miso::Processor.new(fixture_file('120x100.png'))
+    processor.input_file.should == fixture_file('120x100.png')
+  end
+  
+  it "should expand and verify the input file path" do
+    raised = false
+    begin
+      Miso::Processor.new('~/image.png')
+    rescue Errno::ENOENT => e
+      raised = true
+      e.message.should.include File.expand_path('~/image.png')
+    end
+    raised.should.be true
   end
 end

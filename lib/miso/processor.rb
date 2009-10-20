@@ -39,7 +39,8 @@ module Miso
     attr_reader :input_file
     
     def initialize(input_file)
-      @input_file = input_file
+      @input_file = File.expand_path(input_file)
+      raise Errno::ENOENT, @input_file unless File.exist?(@input_file)
     end
     
     def crop(width, height)

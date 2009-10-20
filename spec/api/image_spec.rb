@@ -13,16 +13,16 @@ describe "Miso::Image, concerning initialization" do
   
   it "should initialize with only a file argument and use the default processor class" do
     Miso::Processor.processor_class = Miso::Processor::ImageMagick
-    image = Miso::Image.new('/image.png')
+    image = Miso::Image.new(fixture_file('120x100.png'))
     
-    image.processor.input_file.should == '/image.png'
+    image.processor.input_file.should == fixture_file('120x100.png')
     image.processor.class.should == Miso::Processor::ImageMagick
   end
   
   it "should initialize with a file and processor class" do
-    image = Miso::Image.new('/image.png', Miso::Processor::ImageMagick)
+    image = Miso::Image.new(fixture_file('120x100.png'), Miso::Processor::ImageMagick)
     
-    image.processor.input_file.should == '/image.png'
+    image.processor.input_file.should == fixture_file('120x100.png')
     image.processor.class.should == Miso::Processor::ImageMagick
   end
 end
@@ -32,7 +32,7 @@ describe "An instance of Miso::Image, concerning forwarding calls to the process
     Miso::Processor.any_instance.stubs(:fit)
     Miso::Processor.any_instance.stubs(:crop)
     
-    @image = Miso::Image.new('/image.png', Miso::Processor)
+    @image = Miso::Image.new(fixture_file('120x100.png'), Miso::Processor)
   end
   
   it "should forward #crop to the processor" do
@@ -59,9 +59,9 @@ describe "An instance of Miso::Image, concerning forwarding calls to the process
   end
   
   it "should forward #write to the processor and forward its output file to the new instance of Miso::Image" do
-    @image.processor.expects(:write).with('/output_image.png')
-    output_image = @image.write('/output_image.png')
-    output_image.processor.input_file.should == '/output_image.png'
+    @image.processor.expects(:write).with(fixture_file('120x100.png'))
+    output_image = @image.write(fixture_file('120x100.png'))
+    output_image.processor.input_file.should == fixture_file('120x100.png')
   end
 end
 
@@ -70,7 +70,7 @@ describe "An instance of Miso::Image, concerning combined methods" do
     Miso::Processor.any_instance.stubs(:fit)
     Miso::Processor.any_instance.stubs(:crop)
     
-    @image = Miso::Image.new('/image.png', Miso::Processor)
+    @image = Miso::Image.new(fixture_file('120x100.png'), Miso::Processor)
   end
   
   it "should call #fit to scale and preserve aspect ratio, then call #crop" do
