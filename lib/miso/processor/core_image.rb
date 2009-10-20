@@ -1,3 +1,4 @@
+# Based on code from HotCocoa and: http://redartisan.com/2007/12/12/attachment-fu-with-core-image
 module Miso
   class Processor
     class CoreImage < Processor
@@ -15,8 +16,36 @@ module Miso
         @dimensions ||= ci_image.extent.size.to_a
       end
       
+      def width
+        dimensions.first
+      end
+      
+      def height
+        dimensions.last
+      end
+      
       def crop(width, height)
-        apply_filter 'CICrop', 'inputRectangle' => vector(width, height)
+        apply_filter 'CICrop',
+                     'inputRectangle' => vector(width, height)
+      end
+      
+      def fit(width, height)
+        # choose a scaling factor
+        width_multiplier = width.to_f / self.width
+        height_multiplier = height.to_f / self.height
+        multiplier = width_multiplier < height_multiplier ? width_multiplier : height_multiplier
+        
+        # crop result to integer pixel dimensions
+        new_width = (self.width * multiplier).truncate
+        new_height = (self.height * multiplier).truncate
+        
+        apply_filter 'CIAffineClamp',
+                     'inputTransform' => OSX::NSAffineTransform.transform
+        apply_filter 'CILanczosScaleTransform',
+                     'inputScale' => multiplier.to_f,
+                     'inputAspectRatio' => 1.0
+        
+        crop(new_width, new_height)
       end
       
       def write(output_file)
