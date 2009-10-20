@@ -1,3 +1,4 @@
+require 'rubygems'
 require 'rake/rdoctask'
 
 desc "Run all specs by default"
@@ -29,4 +30,25 @@ namespace :docs do
     rd.rdoc_files.include("README", "LICENSE", "lib/**/*.rb")
     rd.options << "--all" << "--charset" << "utf-8"
   end
+end
+
+begin
+  require 'jeweler'
+  Jeweler::Tasks.new do |s|
+    s.name     = "miso"
+    s.homepage = "http://github.com/Fingertips/miso"
+    s.email    = "manfred@fngtps.com"
+    s.authors  = ["Manfred Stienstra"]
+    s.summary  = s.description = "Miso is a unified API for simple image operations commonly used on the web."
+    s.files    = FileList['**/**'] # tmp until we've patched Jeweler to be able to easily add files to defaults
+  end
+rescue LoadError
+end
+ 
+begin
+  require 'jewelry_portfolio/tasks'
+  JewelryPortfolio::Tasks.new do |p|
+    p.account = 'Fingertips'
+  end
+rescue LoadError
 end
