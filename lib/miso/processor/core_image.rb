@@ -8,6 +8,11 @@ module Miso
       def initialize(input_file)
         super
         require 'osx/cocoa'
+        @image = OSX::CIImage.imageWithContentsOfURL(OSX::NSURL.fileURLWithPath(input_file))
+      end
+      
+      def dimensions
+        @image.extent.size.to_a
       end
     end
   end
