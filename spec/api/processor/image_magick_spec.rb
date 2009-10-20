@@ -1,3 +1,5 @@
+require File.expand_path('../../../start', __FILE__)
+
 describe "An instance of Miso::Processor::ImageMagick" do
   before do
     @image_120_x_100 = Miso::Image.new(fixture_file('120x100.png'), Miso::Processor::ImageMagick)

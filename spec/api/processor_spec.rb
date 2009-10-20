@@ -1,3 +1,5 @@
+require File.expand_path('../../start', __FILE__)
+
 describe "Miso::Processor" do
   before do
     Miso::Processor.processor_class = nil

@@ -1,3 +1,5 @@
+require File.expand_path('../../start', __FILE__)
+
 describe "A Miso::Factory instance" do
   before do
     @input_file = '/image.png'

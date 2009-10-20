@@ -1,3 +1,5 @@
+require File.expand_path('../../start', __FILE__)
+
 describe "Miso::Image, concerning initialization" do
   before do
     Miso::Processor.processor_class = nil
@@ -90,14 +92,14 @@ describe "Miso::Image, concerning shortcut class methods" do
     @image.expects(:crop).with(40, 30)
     @image.expects(:write).with(@output_file)
     
-    Miso::Image.crop(@input_file), @output_file, 40, 30)
+    Miso::Image.crop(@input_file, @output_file, 40, 30)
   end
   
   it "should fit to specified dimensions, conserving the original aspect ratio" do
     @image.expects(:fit).with(40, 30)
     @image.expects(:write).with(@output_file)
     
-    Miso::Image.fit(@input_file), @output_file, 40, 30)
+    Miso::Image.fit(@input_file, @output_file, 40, 30)
   end
   
   it "should return its dimensions" do
