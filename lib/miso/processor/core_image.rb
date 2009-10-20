@@ -6,22 +6,6 @@ module Miso
         require 'osx/cocoa'
         available
       end
-      
-      def crop(width, height)
-        # ...
-      end
-      
-      def fit(width, height)
-        # ...
-      end
-      
-      def dimensions
-        # ...
-      end
-      
-      def write(output_file)
-        # ...
-      end
     end
   end
 end
