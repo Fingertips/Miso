@@ -1,3 +1,6 @@
+- Why do we need autoload and actually make it work.
+  Processor.processor_classes currently references them all, so they're simply
+  loaded.
 - Add Miso::Image#add(image, 10, 10), which adds another image on top of the
   image. This should be implemented by the processor as well.
 - Add Miso::Image#watermark(image, :southwest, 10, 10), which uses
