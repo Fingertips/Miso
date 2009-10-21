@@ -28,7 +28,7 @@ begin
     it "should raise if it can't inflect the type from the extension" do
       lambda {
         Miso::Image.crop(input, output('foo'), 100, 100, processor)
-      }.should.raise Miso::Image::UnsupportedFileType
+      }.should.raise Miso::UnsupportedFileType
     end
     
     private

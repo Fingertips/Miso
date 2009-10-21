@@ -94,7 +94,7 @@ module Miso
         when '.gif'
           OSX::NSGIFFileType
         else
-          raise UnsupportedFileType
+          raise UnsupportedFileType.new(path)
         end
       end
     end

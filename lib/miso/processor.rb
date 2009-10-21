@@ -3,8 +3,6 @@ module Miso
     autoload :CoreImage,   'miso/processor/core_image'
     autoload :ImageMagick, 'miso/processor/image_magick'
     
-    class NotImplementedError < StandardError; end
-    
     class << self
       # Sets the default processor class.
       attr_writer :processor_class

@@ -1,7 +1,5 @@
 module Miso
   class Image
-    class UnsupportedFileType < StandardError; end
-    
     attr_reader :processor
     
     def initialize(input_file, processor_class=nil)
