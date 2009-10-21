@@ -40,17 +40,6 @@ describe "Miso::Processor" do
     processor.input_file.should == fixture_file('120x100.png')
   end
   
-  it "should expand and verify the input file path" do
-    raised = false
-    begin
-      Miso::Processor.new('~/image.png')
-    rescue Errno::ENOENT => e
-      raised = true
-      e.message.should.include File.expand_path('~/image.png')
-    end
-    raised.should.be true
-  end
-  
   it "should returns the width and height" do
     processor = Miso::Processor.new(fixture_file('120x100.png'))
     processor.stubs(:dimensions).returns([120, 100])
