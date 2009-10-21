@@ -35,4 +35,8 @@ class Test::Unit::TestCase
   ensure
     $:.replace before
   end
+  
+  def file_info(path)
+    `/usr/bin/env file '#{path}'`.split(':').last.strip
+  end
 end

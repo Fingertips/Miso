@@ -86,7 +86,16 @@ module Miso
       end
       
       def detect_file_type(path)
-        OSX::NSPNGFileType
+        case File.extname(path)
+        when '.png'
+          OSX::NSPNGFileType
+        when '.jpg'
+          OSX::NSJPEGFileType
+        when '.gif'
+          OSX::NSGIFFileType
+        else
+          raise UnsupportedFileType
+        end
       end
     end
   end

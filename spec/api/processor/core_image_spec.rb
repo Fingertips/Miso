@@ -3,20 +3,6 @@ require File.expand_path('../../../start', __FILE__)
 begin
   require 'osx/cocoa'
   
-  describe "Miso::Processor::CoreImage" do
-    it "should check the load paths to see if RubyCocoa is available" do
-      Miso::Processor::CoreImage.should.be.available
-      with_load_path '/tmp', '~/' do
-        Miso::Processor::CoreImage.should.not.be.available
-      end
-    end
-    
-    it "should require osx/cocoa on initialization" do
-      Miso::Processor::CoreImage.any_instance.expects(:require).with('osx/cocoa')
-      Miso::Processor::CoreImage.new(fixture_file('120x100.png'))
-    end
-  end
-  
   describe "An instance of Miso::Processor::CoreImage" do
     before do
       @image_120_x_100 = Miso::Image.new(fixture_file('120x100.png'), Miso::Processor::CoreImage)
@@ -39,5 +25,5 @@ begin
   end
   
 rescue LoadError
-  warn "[!] Skipping Miso::Processor::CoreImage spec."
+  warn "[!] Skipping Miso::Processor::CoreImage API spec."
 end
