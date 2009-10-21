@@ -40,7 +40,7 @@ begin
     s.email    = ["eloy@fngtps.com", "manfred@fngtps.com"]
     s.authors  = ["Eloy Duran", "Manfred Stienstra"]
     s.summary  = s.description = "Miso is a unified API for simple image operations commonly used on the web."
-    s.files    = FileList['**/**'] # tmp until we've patched Jeweler to be able to easily add files to defaults
+    s.files   -= %w{ .gitignore .kick }
     s.add_dependency('executioner', '>= 0.2.0')
   end
 rescue LoadError
