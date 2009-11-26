@@ -1,3 +1,5 @@
+- Check if sips and IM round the center position in the same way (floor|ceil)
+  if the image dimensions are odds and if so, make the CI processor do the same.
 - Why do we need autoload and actually make it work.
   Processor.processor_classes currently references them all, so they're simply
   loaded.
