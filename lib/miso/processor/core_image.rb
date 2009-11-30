@@ -86,7 +86,7 @@ module Miso
       end
       
       def detect_file_type(path)
-        case File.extname(path)
+        case File.extname(path).downcase
         when '.png'
           OSX::NSPNGFileType
         when '.jpg'
