@@ -89,7 +89,7 @@ module Miso
         case File.extname(path).downcase
         when '.png'
           OSX::NSPNGFileType
-        when '.jpg'
+        when '.jpg', '.jpeg'
           OSX::NSJPEGFileType
         when '.gif'
           OSX::NSGIFFileType
