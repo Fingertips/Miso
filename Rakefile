@@ -21,9 +21,10 @@ namespace :spec do
 end
 
 desc "Run all specs"
-task :spec => [:'spec:api', :'spec:functional'] do
+task :spec do
+  sh "ruby -r #{Dir.glob('spec/**/*_spec.rb').join(' -r ')} -e ''"
 end
-  
+
 namespace :docs do
   Rake::RDocTask.new(:generate) do |rd|
     rd.main = "README"

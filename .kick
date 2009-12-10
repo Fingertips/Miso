@@ -1,15 +1,16 @@
-require 'ignore'
-
+recipe :ignore
 ignore(/(^spec\/tmp|\.DS_Store)$/)
+
+recipe :ruby
+Ruby.runner_bin = 'specrb'
 
 process do |files|
   test_files = files.take_and_map do |file|
     case file
-    when %r{^spec}
-      file
-    when %r{^lib/miso/([\w\/]+).rb$}
-      "spec/api/#{$1}_spec.rb"
+    when %r{^lib/miso/processor/([\w\/]+).rb$}
+      Dir.glob("spec/**/processor/#{$1}_spec.rb")
     end
   end
-  run_ruby_tests test_files
+  
+  Ruby.run_tests test_files
 end

@@ -10,8 +10,7 @@ module Miso
   class Processor
     class ImageMagick < Processor
       def self.available?
-        `which convert`
-        $?.success
+        system("which convert > /dev/null")
       end
       
       def crop(width, height)
