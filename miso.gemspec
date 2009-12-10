@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{miso}
-  s.version = "0.2.2"
+  s.version = "0.2.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Eloy Duran", "Manfred Stienstra"]
-  s.date = %q{2009-12-01}
+  s.date = %q{2009-12-10}
   s.description = %q{Miso is a unified API for simple image operations commonly used on the web.}
   s.email = ["eloy@fngtps.com", "manfred@fngtps.com"]
   s.extra_rdoc_files = [
@@ -36,6 +36,7 @@ Gem::Specification.new do |s|
      "spec/api/processor_spec.rb",
      "spec/fixtures/120x100.png",
      "spec/functional/processor/core_image_spec.rb",
+     "spec/functional/processor/image_magick_spec.rb",
      "spec/functional/processor_spec.rb",
      "spec/start.rb"
   ]
@@ -51,6 +52,7 @@ Gem::Specification.new do |s|
      "spec/api/processor/image_magick_spec.rb",
      "spec/api/processor_spec.rb",
      "spec/functional/processor/core_image_spec.rb",
+     "spec/functional/processor/image_magick_spec.rb",
      "spec/functional/processor_spec.rb",
      "spec/start.rb"
   ]
