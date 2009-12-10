@@ -8,6 +8,8 @@ $:.unshift(File.expand_path('../../lib', __FILE__))
 
 require 'miso'
 require 'miso/processor'
+require 'miso/processor/core_image'
+require 'miso/processor/image_magick'
 
 class Test::Unit::TestCase
   TMP_DIR = File.expand_path('../tmp', __FILE__)

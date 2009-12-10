@@ -17,7 +17,7 @@ module Miso
       # array.
       def processor_class
         @processor_class ||= processor_classes.find { |c| c.available? }
-        raise "None of the Miso::Processor classes is available." unless @processor_class
+        raise "None of the Miso::Processor classes are available." unless @processor_class
         @processor_class
       end
       
