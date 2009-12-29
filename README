@@ -7,8 +7,8 @@ to plug in your own backend.
 A unified API is helpful when you run your code on a number of different boxes
 and architectures. For instance, you could develop your web application on your
 Mac with the Core Image backend [1] and deploy to your Linux server with an
-ImageMagick backend. You could even have the API talk to your custom
-distributed image processing backend.
+ImageMagick/GraphicsMagick backend. You could even have the API talk to your
+custom distributed image processing backend.
 
 [1] Note how this means you will never have to install ImageMagick again (;
 
@@ -50,15 +50,20 @@ But wait, there is more! Read the API documentation for more goodies.
 
 : SUPPORTED BACKENDS
 
-Currently supported backends are: Core Image and ImageMagick, because those
-are the ones we use. If you want to contribute backends we're happy to
-accept patches!
+Currently supported backends are: Core Image, ImageMagick, and GraphicsMagick,
+because those are the ones we, and our contributors use. If you want to
+contribute backends we're happy to accept patches!
+
+
+: CONTRIBUTORS
+
+~> GraphicsMagick * Paul Vaillant (> http://github.com/pvaillant <)
 
 
 : ENDORSEMENTS
 
-  @garyyuen: ‘miso with indian flavors. seems ok.’
-  @Oracl: ‘@veganza I love miso! :)’
+   @garyyuen: ‘miso with indian flavors. seems ok.’
+      @Oracl: ‘@veganza I love miso! :)’
   @lehudgins: ‘ok fine. Miso totally does go kinda bad after a year.’
-  Wikipedia: ‘High in protein and rich in vitamins and minerals, miso played an
-              important nutritional role in feudal Japan.’
+   Wikipedia: ‘High in protein and rich in vitamins and minerals, miso played
+               an important nutritional role in feudal Japan.’

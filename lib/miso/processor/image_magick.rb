@@ -1,6 +1,6 @@
 begin
   require 'rubygems'
-  gem 'executioner', '>= 0.2'
+  gem 'executioner', '>= 0.3'
 rescue LoadError
 end
 require 'executioner'
