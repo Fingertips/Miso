@@ -2,6 +2,7 @@ module Miso
   class Processor
     autoload :CoreImage,   'miso/processor/core_image'
     autoload :ImageMagick, 'miso/processor/image_magick'
+    autoload :GraphicsMagick, 'miso/processor/graphics_magick'
     
     class << self
       # Sets the default processor class.
