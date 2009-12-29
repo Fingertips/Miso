@@ -1,8 +1,8 @@
 module Miso
   class Processor
-    autoload :CoreImage,   'miso/processor/core_image'
-    autoload :ImageMagick, 'miso/processor/image_magick'
+    autoload :CoreImage,      'miso/processor/core_image'
     autoload :GraphicsMagick, 'miso/processor/graphics_magick'
+    autoload :ImageMagick,    'miso/processor/image_magick'
     
     class << self
       # Sets the default processor class.
@@ -27,7 +27,7 @@ module Miso
       # When no explicit processor_class is set this list is iterated, from
       # first to last, and the first available processor on the machine is used.
       def processor_classes
-        @processor_classes ||= [CoreImage, ImageMagick]
+        @processor_classes ||= [CoreImage, GraphicsMagick, ImageMagick]
       end
       
       def available?
