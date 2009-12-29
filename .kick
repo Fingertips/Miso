@@ -2,7 +2,7 @@ recipe :ignore
 ignore(/(^spec\/tmp|\.DS_Store)$/)
 
 recipe :ruby
-Ruby.runner_bin = 'specrb'
+Ruby.runner_bin = 'ruby'
 
 process do |files|
   test_files = files.take_and_map do |file|
