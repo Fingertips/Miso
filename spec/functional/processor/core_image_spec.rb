@@ -19,7 +19,16 @@ begin
   
   describe "An instance of Miso::Processor::CoreImage" do
     it "should write the output file with the type inflected from the extension" do
-      ext_and_type = { 'png' => 'PNG', 'jpg' => 'JPEG', 'jpeg' => 'JPEG', 'gif' => 'GIF' }
+      ext_and_type = {
+        'png'  => 'PNG' ,
+        'jpg'  => 'JPEG',
+        'jpeg' => 'JPEG',
+        'gif'  => 'GIF' ,
+        'tif'  => 'TIFF',
+        'tiff' => 'TIFF',
+        'bmp'  => 'bitmap'
+      }
+
       ext_and_type.each { |k, v| ext_and_type[k.upcase] = v }
       
       ext_and_type.each do |ext, type|

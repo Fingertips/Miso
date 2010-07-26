@@ -93,6 +93,10 @@ module Miso
           OSX::NSJPEGFileType
         when '.gif'
           OSX::NSGIFFileType
+        when '.tiff', '.tif'
+          OSX::NSTIFFFileType
+        when '.bmp'
+          OSX::NSBMPFileType
         else
           raise UnsupportedFileType.new(path)
         end
