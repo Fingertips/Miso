@@ -1,9 +1,9 @@
+require 'miso/processor/core_image'
+require 'miso/processor/image_magick'
+require 'miso/processor/graphics_magick'
+
 module Miso
   class Processor
-    autoload :CoreImage,      'miso/processor/core_image'
-    autoload :GraphicsMagick, 'miso/processor/graphics_magick'
-    autoload :ImageMagick,    'miso/processor/image_magick'
-    
     class << self
       # Sets the default processor class.
       attr_writer :processor_class

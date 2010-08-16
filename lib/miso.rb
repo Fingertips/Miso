@@ -1,8 +1,8 @@
+require 'miso/image'
+require 'miso/factory'
+require 'miso/processor'
+
 module Miso
-  autoload :Factory,   'miso/factory'
-  autoload :Image,     'miso/image'
-  autoload :Processor, 'miso/processor'
-  
   class MisoError < StandardError; end
   class NotImplementedError < MisoError; end
   class UnsupportedFileType < MisoError

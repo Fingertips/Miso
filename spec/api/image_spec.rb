@@ -122,4 +122,8 @@ describe "Miso::Image, concerning shortcut class methods" do
     @image.expects(:dimensions).returns([120, 100])
     Miso::Image.dimensions(@input_file).should == [120, 100]
   end
+  
+  it "should make a factory" do
+    Miso::Image.factory.should.be.a.kind_of(Miso::Factory)
+  end
 end
