@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{miso}
-  s.version = "0.3.2"
+  s.version = "0.3.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Eloy Duran", "Manfred Stienstra"]
-  s.date = %q{2010-07-27}
+  s.date = %q{2010-08-17}
   s.description = %q{Miso is a unified API for simple image operations commonly used on the web.}
   s.email = ["eloy@fngtps.com", "manfred@fngtps.com"]
   s.extra_rdoc_files = [
