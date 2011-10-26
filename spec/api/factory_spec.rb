@@ -29,4 +29,12 @@ describe "A Miso::Factory instance" do
     
     @factory.apply(@input_file, @output_file)
   end
+  
+  it "properly supports crop fitting" do
+    @image.expects(:crop).with(123, 456).returns(@image)
+    @image.expects(:fit).with(123, 456).returns(@image)
+    
+    @factory.crop_fitting(123, 456)
+    @factory.apply(@input_file, @output_file)
+  end
 end

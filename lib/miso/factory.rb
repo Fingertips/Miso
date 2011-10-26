@@ -39,7 +39,7 @@ module Miso
       self
     end
     
-    def crop_fitting(width, heigth)
+    def crop_fitting(width, height)
       @operations << [:crop_fitting, [width, height]]
       self
     end

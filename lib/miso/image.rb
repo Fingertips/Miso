@@ -43,8 +43,8 @@ module Miso
     
     # Combined methods
     
-    def crop_fitting(width, heigth)
-      fit(width, heigth).crop(width, heigth)
+    def crop_fitting(width, height)
+      fit(width, height).crop(width, height)
     end
     
     # Class shortcut methods
