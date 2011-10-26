@@ -41,7 +41,7 @@ begin
     s.email    = ["eloy@fngtps.com", "manfred@fngtps.com"]
     s.authors  = ["Eloy Duran", "Manfred Stienstra"]
     s.summary  = s.description = "Miso is a unified API for simple image operations commonly used on the web."
-    s.files   -= %w{ .gitignore .kick }
+    s.files    = ['LICENSE', 'README'] + Dir.glob('lib/**/*.rb')
     s.add_dependency('executioner', '>= 0.3.0')
   end
 rescue LoadError
