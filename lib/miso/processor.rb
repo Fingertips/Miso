@@ -50,6 +50,10 @@ module Miso
       raise NotImplementedError, "The class `#{self.class.name}' does not implement #fit."
     end
     
+    def auto_orient
+      raise NotImplementedError, "The class `#{self.class.name}' does not implement #auto_orient."
+    end
+    
     def dimensions
       raise NotImplementedError, "The class `#{self.class.name}' does not implement #dimensions."
     end

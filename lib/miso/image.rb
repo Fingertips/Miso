@@ -19,6 +19,11 @@ module Miso
       return self
     end
     
+    def auto_orient
+      @processor.auto_orient
+      return self
+    end
+    
     def dimensions
       @processor.dimensions
     end
@@ -50,6 +55,10 @@ module Miso
     
     def self.fit(input_file, output_file, width, height, processor_class = nil)
       new(input_file, processor_class).fit(width, height).write(output_file)
+    end
+    
+    def self.auto_orient(input_file, output_file, processor_class = nil)
+      new(input_file, processor_class).auto_orient.write(output_file)
     end
     
     def self.dimensions(input_file, processor_class = nil)

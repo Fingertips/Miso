@@ -53,6 +53,15 @@ describe "An instance of Miso::Image, concerning forwarding calls to the process
     @image.fit(123, 456).should.be @image
   end
   
+  it "should forward #auto_orient to the processor" do
+    @image.processor.expects(:auto_orient)
+    @image.auto_orient
+  end
+  
+  it "should return self instance when calling auto_orient" do
+    @image.auto_orient.should.be @image
+  end
+  
   it "should forward #dimensions to the processor and return the result" do
     @image.processor.expects(:dimensions).returns([123, 456])
     @image.dimensions.should == [123, 456]
@@ -116,6 +125,13 @@ describe "Miso::Image, concerning shortcut class methods" do
     @image.expects(:write).with(@output_file)
     
     Miso::Image.fit(@input_file, @output_file, 40, 30)
+  end
+  
+  it "should auto orient the image" do
+    @image.expects(:auto_orient).returns(@image)
+    @image.expects(:write).with(@output_file)
+    
+    Miso::Image.auto_orient(@input_file, @output_file)
   end
   
   it "should return its dimensions" do
