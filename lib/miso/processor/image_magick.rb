@@ -22,6 +22,10 @@ module Miso
         operations << "-resize #{width}x#{height}"
       end
       
+      def auto_orient
+        operations << "-auto-orient"
+      end
+      
       def dimensions
         if info = identify(input_file) and match = /\s(\d+)x(\d+)\+/.match(info)
           match.to_a[1..2].map { |d| d.to_i }

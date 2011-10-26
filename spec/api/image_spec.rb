@@ -31,6 +31,7 @@ describe "An instance of Miso::Image, concerning forwarding calls to the process
   before do
     Miso::Processor.any_instance.stubs(:fit)
     Miso::Processor.any_instance.stubs(:crop)
+    Miso::Processor.any_instance.stubs(:auto_orient)
     
     @image = Miso::Image.new(fixture_file('120x100.png'), Miso::Processor)
   end
