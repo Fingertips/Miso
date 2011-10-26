@@ -44,6 +44,11 @@ module Miso
       self
     end
     
+    def auto_orient
+      @operations << [:auto_orient, []]
+      self
+    end
+    
     def apply(input_file, output_file)
       image = Image.new(input_file, @processor_class)
       @operations.each { |method, args| image.send(method, *args) }

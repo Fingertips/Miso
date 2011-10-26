@@ -21,10 +21,11 @@ describe "A Miso::Factory instance" do
   end
   
   it "should store operations that are to be applied later on" do
-    @factory.crop(123, 456).fit(123, 456)
+    @factory.crop(123, 456).fit(123, 456).auto_orient
     
     @image.expects(:crop).with(123, 456)
     @image.expects(:fit).with(123, 456)
+    @image.expects(:auto_orient)
     
     @factory.apply(@input_file, @output_file)
   end
