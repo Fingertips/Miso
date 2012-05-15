@@ -15,7 +15,7 @@ custom distributed image processing backend.
 
 : INSTALL
 
-  $ gem install miso --source http://gemcutter.org
+  $ gem install miso
 
 
 : EXAMPLES
@@ -46,6 +46,8 @@ Miso can be used in three different ways, each useful in different situations.
     factory.apply('input.jpg', 'output.jpg')
 
 But wait, there is more! Read the API documentation for more goodies.
+
+  http://rubydoc.info/gems/miso
 
 
 : SUPPORTED BACKENDS
